@@ -1,0 +1,18 @@
+# Práctica: Consultas básicas SELECT y Alias — TechStore
+Este proyecto contiene las consultas SQL iniciales desarrolladas para responder a las necesidades del equipo de finanzas de TechStore, optimizando la legibilidad y estructura de los reportes.
+---
+## 1. ¿Por qué es mala práctica usar `SELECT *` en producción?
+Aunque `SELECT *` resulta útil en etapas exploratorias iniciales o desarrollo local, en entornos productivos se considera una mala práctica por varias razones:
+* **Rendimiento y consumo de recursos:** Al solicitar todas las columnas, la base de datos transfiere datos innecesarios a través de la red y consume memoria adicional (tanto en el servidor como en la aplicación cliente). En tablas con millones de registros o campos de texto pesado/binarios, esto degrada drásticamente la velocidad de respuesta.
+* **Mantenibilidad y fragilidad del código:** Si en el futuro se agregan, eliminan o reordenan columnas en la tabla, las aplicaciones o reportes que dependen del orden o estructura exacta de las columnas pueden romperse inesperadamente.
+* **Seguridad y privacidad:** Traer toda la tabla incrementa el riesgo de exponer información confidencial (como datos personales o campos sensibles) que el reporte o usuario no necesita visualizar.
+---
+## 2. ¿Por qué son importantes los alias para un stakeholder no técnico?
+Las bases de datos suelen utilizar nombres técnicos en inglés, abreviaturas o convenciones de código (por ejemplo, `snake_case`) que resultan poco intuitivos para personas fuera del área técnica.
+Los alias (`AS`) permiten traducir y contextualizar los datos directamente en el resultado de la consulta:
+* **Ejemplo concreto:**
+  Si finanzas recibe una columna llamada `total_amount`, pueden surgir dudas sobre si refiere a moneda local, dólares, subtotal o total facturado.
+  Al aplicar un alias:
+  ```sql
+  SELECT total_amount AS monto_total_facturado
+  FROM sales;
